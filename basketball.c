@@ -1,0 +1,284 @@
+//Opengl project - basket ball game
+//authors: Akhil and Amit, TJIT, Bangalore
+
+#include<stdio.h>
+#include<GL/glut.h>
+#include<math.h>
+#include<time.h>
+
+
+GLfloat courtVertices[][3] = {
+	//basket ball court vertices
+		{-2.5, -1.0, -4.7}, {2.5, -1.0, -4.7},
+		{2.5, -1.0, 4.7}, {-2.5, -1.0, 4.7}
+	};
+
+GLfloat firstPoleVertices[][3] = {
+	//basket pole vertuces
+	//base
+		{-0.1, -1.0, -5.2}, {0.1, -1.0, -5.2},
+		{-0.1, -1.0, -5.0}, {0.1, -1.0, -5.0},
+	//middle
+		{-0.1, 0.5, -5.2}, {0.1, 0.5, -5.2},
+		{-0.1, 0.4, -5.0}, {0.1, 0.4, -5.0},
+	//top
+		{-0.1, 1.3, -4.3 }, { 0.1, 1.3 , -4.3},
+		{-0.1, 1.7, -4.3 }, { 0.1, 1.7, -4.3 }
+};
+
+GLfloat secondPoleVertices[][3] = {
+	//basket pole vertuces
+	//base
+		{-0.1, -1.0, 5.2}, {0.1, -1.0, 5.2},
+		{-0.1, -1.0, 5.0}, {0.1, -1.0, 5.0},
+	//middle
+		{-0.1, 0.5, 5.2}, {0.1, 0.5, 5.2},
+		{-0.1, 0.4, 5.0}, {0.1, 0.4, 5.0},
+	//top
+		{-0.1, 1.3, 4.3 }, { 0.1, 1.3 , 4.3 },
+		{-0.1, 1.7, 4.3 }, { 0.1, 1.7, 4.3 }
+};
+
+GLfloat colors[][3] = {
+	{0.0, 0.4, 1.0}, {1.0, 0.0, 0.0},
+	{1.0, 1.0, 0.0}, {0.0, 1.0, 0.0},
+	{0.0, 0.0, 1.0}, {1.0, 0.0, 1.0},
+	{1.0, 1.0, 1.0}, {0.0, 1.0, 1.0} 
+};
+
+void poles(int a, int b, int c, int d)
+{
+	glBegin(GL_POLYGON);
+	glColor3f(0.0, 0.0, 0.0);
+	glVertex3fv(firstPoleVertices[a]);
+	glVertex3fv(firstPoleVertices[b]);
+	glVertex3fv(firstPoleVertices[c]);
+	glVertex3fv(firstPoleVertices[d]);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3f(0.0, 0.0, 0.0);
+	glVertex3fv(secondPoleVertices[a]);
+	glVertex3fv(secondPoleVertices[b]);
+	glVertex3fv(secondPoleVertices[c]);
+	glVertex3fv(secondPoleVertices[d]);
+	glEnd();
+}
+void lines(float a, float b, float c, float d)
+{
+	//a = -2.5, b = -0.05 c = 0.05 d = 2.5
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 1.0, 1.0);
+	glVertex3f(a , -0.99 , b);
+	glVertex3f(d , -0.99 , b);
+	glVertex3f(d , -0.99 , c);
+	glVertex3f(a , -0.99 , c);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 1.0, 1.0);
+	glVertex3f(a , -0.99 , b);
+	glVertex3f(d , -0.99 , b);
+	glVertex3f(d , -0.99 , c);
+	glVertex3f(a , -0.99 , c);
+	glEnd();	
+}
+
+void polygon(int a, int b, int c, int d)
+{
+	//outer color
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 0.1, 0.0);
+	glVertex3f(-3.0, -1.1, -5.2);
+	glVertex3f(3.0, -1.1, -5.2);
+	glVertex3f(3.0, -1.1, 5.2);
+	glVertex3f(-3.0, -1.1, 5.2);
+	glEnd();
+	//court color
+	glBegin(GL_POLYGON);
+	glColor3fv(colors[a]);
+	glVertex3fv(courtVertices[a]);
+	glColor3fv(colors[a]);
+	glVertex3fv(courtVertices[b]);
+	glColor3fv(colors[a]);
+	glVertex3fv(courtVertices[c]);
+	glColor3fv(colors[a]);
+	glVertex3fv(courtVertices[d]);
+	glEnd();
+	//first pole polygon
+	poles(0, 1, 3, 2);
+	poles(4, 5, 7, 6);
+	poles(2, 3, 7, 6);
+	poles(4, 5, 1, 0);
+	poles(3, 1, 5, 7);
+	poles(0, 2, 6, 4);
+
+	//poles from center to board
+	poles(6, 7, 9, 8);
+	poles(4, 5, 11, 10);
+	poles(6, 4, 10 , 8);
+	poles(7, 5, 11, 9);
+
+	//board
+	glBegin(GL_POLYGON);
+	glColor3f(0.75, 0.75, 0.75);
+	glVertex3f(-0.5, 1.0, -4.3);
+	glVertex3f( 0.5, 1.0, -4.3);
+	glVertex3f( 0.5, 2.0, -4.3);
+	glVertex3f(-0.5, 2.0, -4.3);
+	glEnd();
+
+	//center line
+	lines(-2.5, -0.05, 0.05, 2.5);
+
+	//side lines
+	lines(-2.50, 4.7, -4.7, -2.55);
+	lines(2.50, 4.7, -4.7, 2.55);
+
+	//base lines
+	lines(-2.55, 4.70, 4.75, 2.55);
+	lines(-2.55, -4.70, -4.75, 2.55);
+
+
+	//three pointer lines
+	lines(-2.2, 4.7, 3.3, -2.27);
+	lines( 2.2, 4.7, 3.3, 2.27);
+
+	lines(-2.2, -4.7, -3.3, -2.27);
+	lines( 2.2, -4.7, -3.3, 2.27);
+
+
+	//second board
+	glBegin(GL_POLYGON);
+	glColor3f(0.75, 0.75, 0.75);
+	glVertex3f(-0.5, 1.0, 4.3);
+	glVertex3f( 0.5, 1.0, 4.3);
+	glVertex3f( 0.5, 2.0, 4.3);
+	glVertex3f(-0.5, 2.0, 4.3);
+	glEnd();
+
+	//
+
+}
+void circle(float r)
+{
+	int i;
+	glColor3f(1.0, 1.0, 1.0);
+	glBegin(GL_POINTS);
+	for(i = 0; i< 1000; i++)
+	{
+		//x and y defines the radius
+		glVertex3f( (r * cos(2*3.14159 * i/1000.0)), -0.99, (r * sin(2*3.14159 * i/1000.0)));
+	}
+	glEnd();
+}
+
+void semicircle(float r)
+{
+	int i;
+	glColor3f(1.0, 1.0, 1.0);
+	glBegin(GL_POINTS);
+	for(i = 0; i< 1000; i++)
+	{
+		glVertex3f((r * cos(1*3.14159 * i/1000.0)), -0.99, 3.33 - (r * sin(1*3.14159 * i/1000.0)));
+		glVertex3f((r * cos(1*3.14159 * i/1000.0)), -0.99, -3.33 + (r * sin(1*3.14159 * i/1000.0)));
+
+	}
+	glEnd();
+}
+
+void ball()
+{	
+	glTranslatef(0.0, 3.0, 0.0);
+	glColor3f(0.81176, 0.3254, 0.0);
+	glutSolidSphere(0.3, 1000, 1000);
+}
+void colorCube(void)
+{
+	polygon(0, 1, 2, 3);
+	//center circle
+	circle(0.60);
+	circle(0.61);
+	circle(0.62);
+	circle(0.63);
+	circle(0.64);
+	circle(0.65);
+	//three pointer semi cirlce
+	semicircle(2.22);
+	semicircle(2.23);
+	semicircle(2.24);
+	semicircle(2.25);
+	semicircle(2.26);
+	semicircle(2.27);
+	ball();
+}
+
+static GLfloat theta[] = {0.0, 0.0, 0.0};
+static GLint axis = 2;
+static GLdouble viewer[] =  {0.0, 7.0, 7.0};
+
+void display(void)
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	gluLookAt(viewer[0], viewer[1], viewer[2], 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	glRotatef(theta[0], 1.0, 0.0, 0.0);
+	glRotatef(theta[1], 0.0, 1.0, 0.0);
+	glRotatef(theta[2], 0.0, 0.0, 1.0);
+	colorCube();
+	glFlush();
+	glutSwapBuffers();
+} 
+
+
+void mouse(int btn, int state, int x, int y)
+{
+	if(btn == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+		axis = 0;
+	if(btn == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN)
+		axis = 1;
+	if(btn == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+		axis = 2;
+	theta[axis] += 2.0;
+	if(theta[axis] > 360.0) 
+		theta[axis] -= 360.0;
+	display();
+}
+
+void myReshape(int w, int h)
+{
+	glViewport(0, 0, w , h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	if(w <= h)
+		glFrustum(-2.0, 2.0, -2.0 * (GLfloat)h / (GLfloat)w , 2.0 * (GLfloat)h / (GLfloat)w, 2.0, 20.0);
+	else
+		glFrustum(-2.0, 2.0, -2.0 * (GLfloat)w / (GLfloat)h , 2.0 * (GLfloat)w / (GLfloat)h,  2.0, 20.0);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void keys(unsigned char key, int x, int y)
+{
+ if(key == 'x') viewer[0] -= 1.0;
+ if(key == 'X') viewer[0] += 1.0;
+ if(key == 'y') viewer[1] -= 1.0;
+ if(key == 'Y') viewer[1] += 1.0;
+ if(key == 'z') viewer[2] -= 1.0;
+ if(key == 'Z') viewer[2] += 1.0;
+ display();
+}
+
+void main(int argc, char **argv)
+{
+	glutInit(&argc , argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitWindowSize(1000, 1000);
+	glutCreateWindow("Colourable viewer");
+	glutReshapeFunc(myReshape);
+	glutDisplayFunc(display);
+	glutMouseFunc(mouse);
+	glutKeyboardFunc(keys);
+	glEnable(GL_DEPTH_TEST);
+	glClearColor(1.0, 1.0, 1.0, 1.0);
+	glutMainLoop();
+}
