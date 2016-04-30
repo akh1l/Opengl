@@ -147,6 +147,16 @@ void polygon(int a, int b, int c, int d)
 	lines(-2.2, -4.7, -3.3, -2.27);
 	lines( 2.2, -4.7, -3.3, 2.27);
 
+	//two pointer lines
+	lines(-0.6, 4.7, 2.8, -0.64);
+	lines(0.6, 4.7, 2.8, 0.64);
+
+	lines(-0.6, -4.7, -2.8, -0.64);
+	lines(0.6, -4.7, -2.8, 0.64);
+
+	//lines joining the above two lines
+	lines(-0.6, 2.8, 2.84, 0.6);
+	lines(-0.6, -2.8, -2.84, 0.6);
 
 	//second board
 	glBegin(GL_POLYGON);
@@ -160,6 +170,7 @@ void polygon(int a, int b, int c, int d)
 	//
 
 }
+
 void circle(float r)
 {
 	int i;
@@ -173,12 +184,50 @@ void circle(float r)
 	glEnd();
 }
 
-void semicircle(float r)
+void Dcircle(float r)
 {
 	int i;
 	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_POINTS);
 	for(i = 0; i< 1000; i++)
+	{
+		//x and y defines the radius
+		glVertex3f( (r * cos(1*3.14159 * i/1000.0)), -0.99, 2.8 - (r * sin(1*3.14159 * i/1000.0)));
+		glVertex3f( (r * cos(1*3.14159 * i/1000.0)), -0.99, -2.8 + (r * sin(1*3.14159 * i/1000.0)));
+
+	}
+
+	for(i = 0; i < 20; i++)
+	{
+		//x and y defines the radius
+		glVertex3f( (r * cos(1*3.14159 * i/20.0)), -0.99, 2.8 + (r * sin(1*3.14159 * i/20.0)));
+		glVertex3f( (r * cos(1*3.14159 * i/20.0)), -0.99, -2.8 - (r * sin(1*3.14159 * i/20.0)));
+	}
+	glEnd();
+}
+
+void ring(float r)
+{
+	int i;
+	glColor3f(1.0, 0.0, 0.0);
+	glBegin(GL_POINTS);
+	for(i = 0; i< 1000; i++)
+	{
+		//x and y defines the radius
+		glVertex3f((r * cos(2*3.14159 * i/1000.0)), 1.2, 4.3 - 0.19 + (r * sin(2*3.14159 * i/1000.0)));
+		glVertex3f((r * cos(2*3.14159 * i/1000.0)), 1.2, -4.3 + 0.19 + (r * sin(2*3.14159 * i/1000.0)));
+
+	}
+	glEnd();
+}
+
+
+void semicircle(float r)
+{
+	int i;
+	glColor3f(1.0, 1.0, 1.0);
+	glBegin(GL_POINTS);
+	for(i = 0; i < 1000; i++)
 	{
 		glVertex3f((r * cos(1*3.14159 * i/1000.0)), -0.99, 3.33 - (r * sin(1*3.14159 * i/1000.0)));
 		glVertex3f((r * cos(1*3.14159 * i/1000.0)), -0.99, -3.33 + (r * sin(1*3.14159 * i/1000.0)));
@@ -189,9 +238,9 @@ void semicircle(float r)
 
 void ball()
 {	
-	glTranslatef(0.0, 3.0, 0.0);
+	glTranslatef(0.0, 2.0, 0.0);
 	glColor3f(0.81176, 0.3254, 0.0);
-	glutSolidSphere(0.3, 1000, 1000);
+	glutSolidSphere(0.10, 1000, 1000);
 }
 void colorCube(void)
 {
@@ -203,6 +252,17 @@ void colorCube(void)
 	circle(0.63);
 	circle(0.64);
 	circle(0.65);
+
+	Dcircle(0.6);
+	//Dcircle(0.61);
+	//Dcircle(0.62);
+	//Dcircle(0.63);
+	//Dcircle(0.64);
+
+	ring(0.15);
+	ring(0.16);
+	ring(0.17);
+	ring(0.18);
 	//three pointer semi cirlce
 	semicircle(2.22);
 	semicircle(2.23);
@@ -211,6 +271,9 @@ void colorCube(void)
 	semicircle(2.26);
 	semicircle(2.27);
 	ball();
+
+	//inner circles
+
 }
 
 static GLfloat theta[] = {0.0, 0.0, 0.0};
