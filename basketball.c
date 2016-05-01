@@ -84,6 +84,25 @@ void lines(float a, float b, float c, float d)
 	glEnd();	
 }
 
+void verticalLines(float a, float b, float c, float d)
+{
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 1.0, 1.0);
+	glVertex3f(a, b, -4.29);
+	glVertex3f(d, b, -4.29);
+	glVertex3f(d, c, -4.29);
+	glVertex3f(a, c, -4.29);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 1.0, 1.0);
+	glVertex3f(a, b, 4.29);
+	glVertex3f(d, b, 4.29);
+	glVertex3f(d, c, 4.29);
+	glVertex3f(a, c, 4.29);
+	glEnd();	
+}
+
 void polygon(int a, int b, int c, int d)
 {
 	//outer color
@@ -121,7 +140,7 @@ void polygon(int a, int b, int c, int d)
 
 	//board
 	glBegin(GL_POLYGON);
-	glColor3f(0.75, 0.75, 0.75);
+	glColor3f(0.5, 0.5, 0.5);
 	glVertex3f(-0.5, 1.0, -4.3);
 	glVertex3f( 0.5, 1.0, -4.3);
 	glVertex3f( 0.5, 2.0, -4.3);
@@ -141,11 +160,11 @@ void polygon(int a, int b, int c, int d)
 
 
 	//three pointer lines
-	lines(-2.2, 4.7, 3.3, -2.27);
-	lines( 2.2, 4.7, 3.3, 2.27);
+	lines(-2.2, 4.7, 4.05, -2.27);
+	lines( 2.2, 4.7, 4.05, 2.27);
 
-	lines(-2.2, -4.7, -3.3, -2.27);
-	lines( 2.2, -4.7, -3.3, 2.27);
+	lines(-2.2, -4.7, -4.05, -2.27);
+	lines( 2.2, -4.7, -4.05, 2.27);
 
 	//two pointer lines
 	lines(-0.6, 4.7, 2.8, -0.64);
@@ -158,9 +177,15 @@ void polygon(int a, int b, int c, int d)
 	lines(-0.6, 2.8, 2.84, 0.6);
 	lines(-0.6, -2.8, -2.84, 0.6);
 
+	//vertical lines on the board
+	verticalLines(-0.15, 1.2, 1.24, 0.15); //bottom
+	verticalLines(-0.15, 1.5, 1.54, 0.15); //down
+
+	verticalLines(-0.15, 1.2, 1.5, -0.10);
+	verticalLines(0.15, 1.2, 1.5, 0.10);
 	//second board
 	glBegin(GL_POLYGON);
-	glColor3f(0.75, 0.75, 0.75);
+	glColor3f(0.5, 0.5, 0.5);
 	glVertex3f(-0.5, 1.0, 4.3);
 	glVertex3f( 0.5, 1.0, 4.3);
 	glVertex3f( 0.5, 2.0, 4.3);
@@ -209,7 +234,7 @@ void Dcircle(float r)
 void ring(float r)
 {
 	int i;
-	glColor3f(1.0, 0.0, 0.0);
+	glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_POINTS);
 	for(i = 0; i< 1000; i++)
 	{
@@ -229,8 +254,8 @@ void semicircle(float r)
 	glBegin(GL_POINTS);
 	for(i = 0; i < 1000; i++)
 	{
-		glVertex3f((r * cos(1*3.14159 * i/1000.0)), -0.99, 3.33 - (r * sin(1*3.14159 * i/1000.0)));
-		glVertex3f((r * cos(1*3.14159 * i/1000.0)), -0.99, -3.33 + (r * sin(1*3.14159 * i/1000.0)));
+		glVertex3f((r * cos(1*3.14159 * i/1000.0)), -0.99, 4.05 - (r * sin(1*3.14159 * i/1000.0)));
+		glVertex3f((r * cos(1*3.14159 * i/1000.0)), -0.99, -4.05 + (r * sin(1*3.14159 * i/1000.0)));
 
 	}
 	glEnd();
@@ -263,7 +288,7 @@ void net(int poleChooser)
 	}
 
 	//top vertices
-	glColor3f(47/255, 82/255, 78/255);
+	glColor3f(235.0/255.0, 63.0/255.0, 23.0/255.0);
 	for(i = 0; i < 20; i++)
 	{
 		topVertices[0][i] = ((r) * cos(2 * 3.14159 * i/20.0)); //x values
@@ -461,6 +486,6 @@ void main(int argc, char **argv)
 	glutMouseFunc(mouse);
 	glutKeyboardFunc(keys);
 	glEnable(GL_DEPTH_TEST);
-	glClearColor(1.0, 1.0, 1.0, 1.0);
+	glClearColor(1.0, 1.0, 1.0, 0.0);
 	glutMainLoop();
 }
