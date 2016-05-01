@@ -242,6 +242,122 @@ void ball()
 	glColor3f(0.81176, 0.3254, 0.0);
 	glutSolidSphere(0.10, 1000, 1000);
 }
+
+void net(int poleChooser)
+{
+	float r = 0.15;
+	int i;
+	float poleDecider = 0;
+	GLfloat topVertices[10][200];
+	GLfloat middleVertices[10][200];
+	GLfloat bottomVertices[10][200];
+
+	//choosing the pole
+	if(poleChooser == 1)
+	{
+		poleDecider = 4.3 - 0.19;
+	}
+	else
+	{
+		poleDecider = -4.3 + 0.19;
+	}
+
+	//top vertices
+	glColor3f(47/255, 82/255, 78/255);
+	for(i = 0; i < 20; i++)
+	{
+		topVertices[0][i] = ((r) * cos(2 * 3.14159 * i/20.0)); //x values
+		topVertices[1][i] = (poleDecider + (r) * sin(2 * 3.14159 * i/20.0)); //y values
+		printf("%f\n",topVertices[0][i] );
+		glBegin(GL_POINTS);
+		glVertex3f(topVertices[0][i], 1.2, topVertices[1][i]);
+		glEnd();
+	}
+
+	//middle vertices
+	for(i = 0; i < 20; i++)
+	{
+		middleVertices[0][i] = ((r - 0.05)* cos(2 * 3.14159 * i/20.0)); //x values
+		middleVertices[1][i] = ( poleDecider + (r - 0.05)* sin(2 * 3.14159 * i/20.0)); //y values
+		printf("%f\n",middleVertices[0][i] );
+		glBegin(GL_POINTS);
+		glVertex3f(middleVertices[0][i], 1.0, middleVertices[1][i]);
+		glEnd();
+	}
+
+	//bottom vertices
+	for(i = 0; i < 20; i++)
+	{
+		bottomVertices[0][i] = ((r - 0.05)* cos(2 * 3.14159 * i/20.0)); //x values
+		bottomVertices[1][i] = ( poleDecider + (r - 0.05)* sin(2 * 3.14159 * i/20.0)); //y values
+		printf("%f\n",bottomVertices[0][i] );
+		glBegin(GL_POINTS);
+		glVertex3f(bottomVertices[0][i], 0.8, bottomVertices[1][i]);
+		glEnd();
+	}
+
+
+	//drawing lines using vertices to get the rhombus pattern
+	for(i = 0; i < 20; i++)
+	{
+		//from top vertices to the middle vertices
+		glBegin(GL_LINES);
+		if(i == 19)
+		{
+			glVertex3f(topVertices[0][i], 1.2, topVertices[1][i]);
+			glVertex3f(middleVertices[0][0], 1.0, middleVertices[1][0]);
+		}
+		else
+		{
+			glVertex3f(topVertices[0][i], 1.2, topVertices[1][i]);
+			glVertex3f(middleVertices[0][i + 1], 1.0, middleVertices[1][i + 1]);
+		}
+		glEnd();
+
+		glBegin(GL_LINES);
+		if(i == 0)
+		{
+			glVertex3f(topVertices[0][i], 1.2, topVertices[1][i]);
+			glVertex3f(middleVertices[0][19], 1.0, middleVertices[1][19]);
+		}
+		else
+		{
+			glVertex3f(topVertices[0][i], 1.2, topVertices[1][i]);
+			glVertex3f(middleVertices[0][i - 1], 1.0, middleVertices[1][i - 1]);
+		}
+		glEnd();
+
+
+		//from middle vertices to bottom vertices
+		glBegin(GL_LINES);
+		if(i == 19)
+		{
+			glVertex3f(middleVertices[0][i], 1.0, middleVertices[1][i]);
+			glVertex3f(bottomVertices[0][0], 0.8, bottomVertices[1][0]);
+		}
+		else
+		{
+			glVertex3f(middleVertices[0][i], 1.0, middleVertices[1][i]);
+			glVertex3f(bottomVertices[0][i + 1], 0.8, bottomVertices[1][i + 1]);
+		}
+		glEnd();
+
+		glBegin(GL_LINES);
+		if(i == 0)
+		{
+			glVertex3f(middleVertices[0][i], 1.0, middleVertices[1][i]);
+			glVertex3f(bottomVertices[0][19], 0.8, bottomVertices[1][19]);
+		}
+		else
+		{
+			glVertex3f(middleVertices[0][i], 1.0, middleVertices[1][i]);
+			glVertex3f(bottomVertices[0][i - 1], 0.8, bottomVertices[1][i - 1]);
+		}
+		glEnd();
+
+	}
+}
+
 void colorCube(void)
 {
 	polygon(0, 1, 2, 3);
@@ -253,17 +369,20 @@ void colorCube(void)
 	circle(0.64);
 	circle(0.65);
 
+
 	Dcircle(0.6);
 	//Dcircle(0.61);
 	//Dcircle(0.62);
 	//Dcircle(0.63);
 	//Dcircle(0.64);
+	net(1);
+	net(2);
 
 	ring(0.15);
 	ring(0.16);
 	ring(0.17);
 	ring(0.18);
-	//three pointer semi cirlce
+	////three pointer semi cirlce
 	semicircle(2.22);
 	semicircle(2.23);
 	semicircle(2.24);
