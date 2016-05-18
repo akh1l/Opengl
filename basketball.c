@@ -42,13 +42,6 @@ GLfloat secondPoleVertices[][3] = {
 	{-0.1, 1.7, 4.3 }, { 0.1, 1.7, 4.3 }
 };
 
-GLfloat colors[][3] = {
-	{0.0, 0.4, 1.0}, {1.0, 0.0, 0.0},
-	{1.0, 1.0, 0.0}, {0.0, 1.0, 0.0},
-	{0.0, 0.0, 1.0}, {1.0, 0.0, 1.0},
-	{1.0, 1.0, 1.0}, {0.0, 1.0, 1.0} 
-};
-
 void poles(int a, int b, int c, int d)
 {
 	glBegin(GL_POLYGON);
@@ -109,6 +102,7 @@ void verticalLines(float a, float b, float c, float d)
 void polygon(int a, int b, int c, int d)
 {
 	//outer color
+	//top face
 	glBegin(GL_POLYGON);
 	glColor3f(1.0, 0.1, 0.0);
 	glVertex3f(-3.0, -1.1, -5.2);
@@ -116,16 +110,57 @@ void polygon(int a, int b, int c, int d)
 	glVertex3f(3.0, -1.1, 5.2);
 	glVertex3f(-3.0, -1.1, 5.2);
 	glEnd();
+	//bottom face
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 0.1, 0.0);
+	glVertex3f(-3.0, -1.5, -5.2);
+	glVertex3f(3.0, -1.5, -5.2);
+	glVertex3f(3.0, -1.5, 5.2);
+	glVertex3f(-3.0, -1.5, 5.2);
+	glEnd();
+	//sides
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 0.1, 0.0);
+	glVertex3f(-3.0, -1.1, -5.2);
+	glVertex3f(-3.0, -1.5, -5.2);
+	glVertex3f(-3.0, -1.5, 5.2);
+	glVertex3f(-3.0, -1.1, 5.2);
+	glEnd();
+	//the other side
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 0.1, 0.0);
+	glVertex3f(3.0, -1.1, -5.2);
+	glVertex3f(3.0, -1.5, -5.2);
+	glVertex3f(3.0, -1.5, 5.2);
+	glVertex3f(3.0, -1.1, 5.2);
+	glEnd();
+	//pole sides
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 0.1, 0.0);
+	glVertex3f(-3.0, -1.1, 5.2);
+	glVertex3f(3.0, -1.1, 5.2);
+	glVertex3f(3.0, -1.5, 5.2);
+	glVertex3f(-3.0, -1.5, 5.2);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 0.1, 0.0);
+	glVertex3f(-3.0, -1.1, -5.2);
+	glVertex3f(3.0, -1.1, -5.2);
+	glVertex3f(3.0, -1.5, -5.2);
+	glVertex3f(-3.0, -1.5, -5.2);
+	glEnd();
+
 	//court color
 	glBegin(GL_POLYGON);
-	glColor3fv(colors[a]);
+	glColor3f(0.0, 0.4, 1.0);
 	glVertex3fv(courtVertices[a]);
-	glColor3fv(colors[a]);
+	glColor3f(0.0, 0.4, 1.0);
 	glVertex3fv(courtVertices[b]);
-	glColor3fv(colors[a]);
+	glColor3f(0.0, 0.4, 1.0);
 	glVertex3fv(courtVertices[c]);
-	glColor3fv(colors[a]);
-	glVertex3fv(courtVertices[d]);
+	glColor3f(0.0, 0.4, 1.0);
+	glVertex3fv(courtVertices[d]);	
 	glEnd();
 	//first pole polygon
 	poles(0, 1, 3, 2);
@@ -194,9 +229,6 @@ void polygon(int a, int b, int c, int d)
 	glVertex3f( 0.5, 2.0, 4.3);
 	glVertex3f(-0.5, 2.0, 4.3);
 	glEnd();
-
-	//
-
 }
 
 void circle(float r)
@@ -275,14 +307,14 @@ void ball()
 		glTranslatef(0.0, 0.8, -2.8); //calculated using the last vertex of parabola
 	}
 	glColor3f(0.81176, 0.3254, 0.0);
-	glutSolidSphere(0.15, 1000, 1000);
+	glutSolidSphere(0.15, 1000, 20);
 }
 void headfunction()
 {
 	glPushMatrix();
 	glColor3f(202.0 / 255.0, 160.0/255.0, 100.0/225.0);
 	glTranslatef(0.0, 0.8, +0.05);
-	glutSolidSphere(0.25, 1000, 1000);
+	glutSolidSphere(0.30, 1000, 20);
 	glPopMatrix();
 }
 
@@ -572,10 +604,8 @@ void characterDesign(int a, int b, int c, int d)
 	glEnd();
 	glPopMatrix();
 
-	
 
 	//borders
-	
 
 	glColor3f(R, G, B);
 	glBegin(GL_LINE_LOOP);
@@ -732,18 +762,20 @@ void myReshape(int w, int h)
 
 void keys(unsigned char key, int x, int y)
 {
-	if(key == 'x') viewer[0] -= 1.0;
-	if(key == 'X') viewer[0] += 1.0;
-	if(key == 'y') viewer[1] -= 1.0;
-	if(key == 'Y') viewer[1] += 1.0;
-	if(key == 'z') viewer[2] -= 1.0;
-	if(key == 'Z') viewer[2] += 1.0;
+	//test conditions to ensure that the camera always capture the obejct and does move too far from the object
+	if(key == 'x' && viewer[0] != -6) viewer[0] -= 1.0;
+	if(key == 'X' && viewer[0] != 6) viewer[0] += 1.0;
+	if(key == 'y' && viewer[1] != 0) viewer[1] -= 1.0;
+	if(key == 'Y' && viewer[1] != 9) viewer[1] += 1.0;
+	if(key == 'z'  && viewer[2] != 4) viewer[2] -= 1.0;
+	if(key == 'Z'  && viewer[2] != 10) viewer[2] += 1.0;
 	if(key == 's' || key == 'S')
 	{
 		triggered = 1;
 		firsttime = 1;
 		printf("triggered\n");
 	}
+	printf("%f\n",viewer[0] );
 	display();
 }
 
