@@ -574,13 +574,7 @@ void characterDesign(int a, int b, int c, int d)
 		glVertex3f( 0.15 - (r * cos(2*3.14159 * i/1000.0)), 0.8 + (r * sin(2*3.14159 * i/1000.0)), -0.2);
 		glVertex3f( -0.15 - (r * cos(2*3.14159 * i/1000.0)), 0.8 + (r * sin(2*3.14159 * i/1000.0)), -0.2);
 	}
-	//another ring to make the eyes look darker
-	//for(i = 0; i< 1000; i++)
-	//{
-	//	//x and y defines the radius
-	//	glVertex3f( 0.15 - ((r - 0.005) * cos(2*3.14159 * i/1000.0)), 0.8 + ((r - 0.005) * sin(2*3.14159 * i/1000.0)), -0.2);
-	//	glVertex3f( -0.15 - ((r - 0.005) * cos(2*3.14159 * i/1000.0)), 0.8 + ((r - 0.005) * sin(2*3.14159 * i/1000.0)), -0.2);
-	//}
+	
 	glEnd();	
 
 	//mouth
@@ -805,9 +799,6 @@ void keys(unsigned char key, int x, int y)
 		firsttime = 1;
 	}
 	display();
-	/*
-	&& viewer[1] != 0
-&& viewer[1] != 9*/
 }
 
 void main(int argc, char **argv)
@@ -822,6 +813,6 @@ void main(int argc, char **argv)
 	glutKeyboardFunc(keys);
 	glEnable(GL_DEPTH_TEST);
 	glutTimerFunc(1, update, 0);
-	glClearColor(1.0, 1.0, 1.0, 0.0);
+	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glutMainLoop();
 }
