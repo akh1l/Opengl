@@ -25,8 +25,8 @@ GLfloat firstPoleVertices[][3] = {
 	{-0.1, 0.5, -5.2}, {0.1, 0.5, -5.2},
 	{-0.1, 0.4, -5.0}, {0.1, 0.4, -5.0},
 	//top
-	{-0.1, 1.3, -4.3 }, { 0.1, 1.3 , -4.3},
-	{-0.1, 1.7, -4.3 }, { 0.1, 1.7, -4.3 }
+	{-0.1, 1.3, -4.4 }, { 0.1, 1.3 , -4.4},
+	{-0.1, 1.7, -4.4 }, { 0.1, 1.7, -4.4 }
 };
 
 GLfloat secondPoleVertices[][3] = {
@@ -38,22 +38,70 @@ GLfloat secondPoleVertices[][3] = {
 	{-0.1, 0.5, 5.2}, {0.1, 0.5, 5.2},
 	{-0.1, 0.4, 5.0}, {0.1, 0.4, 5.0},
 	//top
-	{-0.1, 1.3, 4.3 }, { 0.1, 1.3 , 4.3 },
-	{-0.1, 1.7, 4.3 }, { 0.1, 1.7, 4.3 }
+	{-0.1, 1.3, 4.4 }, { 0.1, 1.3 , 4.4},
+	{-0.1, 1.7, 4.4 }, { 0.1, 1.7, 4.4}
 };
 
+GLfloat firstBoardVertices[][3] = {
+	//basket board vertuces
+	//base
+	{-0.5, 1.0, -4.3}, { 0.5, 1.0, -4.3},
+	{-0.5, 1.0, -4.4}, { 0.5, 1.0, -4.4},
+	
+	//top
+	{-0.5, 2.0, -4.3}, { 0.5, 2.0, -4.3},
+	{-0.5, 2.0, -4.4}, { 0.5, 2.0, -4.4},
+};
+
+GLfloat secondBoardVertices[][3] = {
+	//basket board vertuces
+	//base
+	{-0.5, 1.0, 4.3}, { 0.5, 1.0, 4.3},
+	{-0.5, 1.0, 4.4}, { 0.5, 1.0, 4.4},
+	
+	//top
+	{-0.5, 2.0, 4.3}, { 0.5, 2.0, 4.3},
+	{-0.5, 2.0, 4.4}, { 0.5, 2.0, 4.4},
+};
+
+GLfloat baseVertices[][3] = {
+	//top
+	{-3.0, -1.0001, -5.2}, {3.0, -1.0001, -5.2},
+	{-3.0, -1.0001, 5.2}, {3.0, -1.0001, 5.2},
+	//bottom
+	{-3.0, -1.5, -5.2}, {3.0, -1.5, -5.2},
+	{-3.0, -1.5, 5.2}, {3.0, -1.5, 5.2},
+
+};
 void poles(int a, int b, int c, int d)
 {
 	glBegin(GL_POLYGON);
-	glColor3f(0.0, 0.0, 0.0);
+	//glColor3f(0.0, 0.0, 0.0);
+	glColor3f(55.0 / 255.0, 51.0/ 255.0, 49.0/ 255.0);
 	glVertex3fv(firstPoleVertices[a]);
 	glVertex3fv(firstPoleVertices[b]);
 	glVertex3fv(firstPoleVertices[c]);
 	glVertex3fv(firstPoleVertices[d]);
 	glEnd();
-
+	//border for the poles
+	glBegin(GL_LINE_LOOP);
+	glColor3f(43.0 / 255.0, 39.0/ 255.0, 37.0/ 255.0);
+	glVertex3fv(firstPoleVertices[a]);
+	glVertex3fv(firstPoleVertices[b]);
+	glVertex3fv(firstPoleVertices[c]);
+	glVertex3fv(firstPoleVertices[d]);
+	glEnd();
+	//second pole
 	glBegin(GL_POLYGON);
-	glColor3f(0.0, 0.0, 0.0);
+	glColor3f(55.0 / 255.0, 51.0/ 255.0, 49.0/ 255.0);
+	glVertex3fv(secondPoleVertices[a]);
+	glVertex3fv(secondPoleVertices[b]);
+	glVertex3fv(secondPoleVertices[c]);
+	glVertex3fv(secondPoleVertices[d]);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	glColor3f(43.0 / 255.0, 39.0/ 255.0, 37.0/ 255.0);
 	glVertex3fv(secondPoleVertices[a]);
 	glVertex3fv(secondPoleVertices[b]);
 	glVertex3fv(secondPoleVertices[c]);
@@ -80,7 +128,7 @@ void lines(float a, float b, float c, float d)
 	glEnd();	
 }
 
-void verticalLines(float a, float b, float c, float d)
+void onBoardLines(float a, float b, float c, float d)
 {
 	glBegin(GL_POLYGON);
 	glColor3f(1.0, 1.0, 1.0);
@@ -99,58 +147,67 @@ void verticalLines(float a, float b, float c, float d)
 	glEnd();	
 }
 
+void board(int a, int b, int c, int d)
+{
+	glBegin(GL_POLYGON);
+	glColor3f(0.5, 0.5, 0.5);
+	glVertex3fv(firstBoardVertices[a]);
+	glVertex3fv(firstBoardVertices[b]);
+	glVertex3fv(firstBoardVertices[c]);
+	glVertex3fv(firstBoardVertices[d]);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	glColor3f(86.0/255.0, 86.0/255.0, 86.0/255.0);
+	glVertex3fv(firstBoardVertices[a]);
+	glVertex3fv(firstBoardVertices[b]);
+	glVertex3fv(firstBoardVertices[c]);
+	glVertex3fv(firstBoardVertices[d]);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3f(0.5, 0.5, 0.5);
+	glVertex3fv(secondBoardVertices[a]);
+	glVertex3fv(secondBoardVertices[b]);
+	glVertex3fv(secondBoardVertices[c]);
+	glVertex3fv(secondBoardVertices[d]);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	glColor3f(86.0/255.0, 86.0/255.0, 86.0/255.0);
+	glVertex3fv(secondBoardVertices[a]);
+	glVertex3fv(secondBoardVertices[b]);
+	glVertex3fv(secondBoardVertices[c]);
+	glVertex3fv(secondBoardVertices[d]);
+	glEnd();
+}
+
+void base(int a, int b, int c, int d)
+{
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 0.1, 0.0);
+	glVertex3fv(baseVertices[a]);
+	glVertex3fv(baseVertices[b]);
+	glVertex3fv(baseVertices[c]);
+	glVertex3fv(baseVertices[d]);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	glColor3f(165.0/255.0, 0.0/255.0, 3.0/255.0);
+	glVertex3fv(baseVertices[a]);
+	glVertex3fv(baseVertices[b]);
+	glVertex3fv(baseVertices[c]);
+	glVertex3fv(baseVertices[d]);
+	glEnd();
+}
 void polygon(int a, int b, int c, int d)
 {
-	//outer color
-	//top face
-	glBegin(GL_POLYGON);
-	glColor3f(1.0, 0.1, 0.0);
-	glVertex3f(-3.0, -1.1, -5.2);
-	glVertex3f(3.0, -1.1, -5.2);
-	glVertex3f(3.0, -1.1, 5.2);
-	glVertex3f(-3.0, -1.1, 5.2);
-	glEnd();
-	//bottom face
-	glBegin(GL_POLYGON);
-	glColor3f(1.0, 0.1, 0.0);
-	glVertex3f(-3.0, -1.5, -5.2);
-	glVertex3f(3.0, -1.5, -5.2);
-	glVertex3f(3.0, -1.5, 5.2);
-	glVertex3f(-3.0, -1.5, 5.2);
-	glEnd();
-	//sides
-	glBegin(GL_POLYGON);
-	glColor3f(1.0, 0.1, 0.0);
-	glVertex3f(-3.0, -1.1, -5.2);
-	glVertex3f(-3.0, -1.5, -5.2);
-	glVertex3f(-3.0, -1.5, 5.2);
-	glVertex3f(-3.0, -1.1, 5.2);
-	glEnd();
-	//the other side
-	glBegin(GL_POLYGON);
-	glColor3f(1.0, 0.1, 0.0);
-	glVertex3f(3.0, -1.1, -5.2);
-	glVertex3f(3.0, -1.5, -5.2);
-	glVertex3f(3.0, -1.5, 5.2);
-	glVertex3f(3.0, -1.1, 5.2);
-	glEnd();
-	//pole sides
-	glBegin(GL_POLYGON);
-	glColor3f(1.0, 0.1, 0.0);
-	glVertex3f(-3.0, -1.1, 5.2);
-	glVertex3f(3.0, -1.1, 5.2);
-	glVertex3f(3.0, -1.5, 5.2);
-	glVertex3f(-3.0, -1.5, 5.2);
-	glEnd();
-
-	glBegin(GL_POLYGON);
-	glColor3f(1.0, 0.1, 0.0);
-	glVertex3f(-3.0, -1.1, -5.2);
-	glVertex3f(3.0, -1.1, -5.2);
-	glVertex3f(3.0, -1.5, -5.2);
-	glVertex3f(-3.0, -1.5, -5.2);
-	glEnd();
-
+	base(0, 1, 3, 2);
+	base(4, 5, 7, 6);
+	base(2, 3, 7, 6);
+	base(0, 1, 5, 4);
+	base(0, 2, 6, 4);
+	base(1, 3, 7, 5);
 	//court color
 	glBegin(GL_POLYGON);
 	glColor3f(0.0, 0.4, 1.0);
@@ -162,7 +219,7 @@ void polygon(int a, int b, int c, int d)
 	glColor3f(0.0, 0.4, 1.0);
 	glVertex3fv(courtVertices[d]);	
 	glEnd();
-	//first pole polygon
+	// pole from bast to the top
 	poles(0, 1, 3, 2);
 	poles(4, 5, 7, 6);
 	poles(2, 3, 7, 6);
@@ -176,14 +233,13 @@ void polygon(int a, int b, int c, int d)
 	poles(6, 4, 10 , 8);
 	poles(7, 5, 11, 9);
 
-	//board
-	glBegin(GL_POLYGON);
-	glColor3f(0.5, 0.5, 0.5);
-	glVertex3f(-0.5, 1.0, -4.3);
-	glVertex3f( 0.5, 1.0, -4.3);
-	glVertex3f( 0.5, 2.0, -4.3);
-	glVertex3f(-0.5, 2.0, -4.3);
-	glEnd();
+	//drawing board
+	board(0, 1, 3, 2);
+	board(4, 5, 7, 6);
+	board(0, 2, 6, 4);
+	board(1, 3, 7, 5);
+	board(0, 1, 5, 4);
+	board(3, 7, 6, 2);	// remove the comments to draw the board faces
 
 	//center line
 	lines(-2.5, -0.05, 0.05, 2.5);
@@ -216,30 +272,24 @@ void polygon(int a, int b, int c, int d)
 	lines(-0.6, -2.8, -2.84, 0.6);
 
 	//vertical lines on the board
-	verticalLines(-0.15, 1.2, 1.24, 0.15); //bottom
-	verticalLines(-0.15, 1.5, 1.54, 0.15); //down
+	onBoardLines(-0.15, 1.2, 1.24, 0.15); //bottom
+	onBoardLines(-0.15, 1.5, 1.54, 0.15); //down
 
-	verticalLines(-0.15, 1.2, 1.5, -0.10);
-	verticalLines(0.15, 1.2, 1.5, 0.10);
-	//second board
-	glBegin(GL_POLYGON);
-	glColor3f(0.5, 0.5, 0.5);
-	glVertex3f(-0.5, 1.0, 4.3);
-	glVertex3f( 0.5, 1.0, 4.3);
-	glVertex3f( 0.5, 2.0, 4.3);
-	glVertex3f(-0.5, 2.0, 4.3);
-	glEnd();
+	onBoardLines(-0.15, 1.2, 1.5, -0.10);
+	onBoardLines(0.15, 1.2, 1.5, 0.10);
+	
 }
 
 void circle(float r)
 {
 	int i;
 	glColor3f(1.0, 1.0, 1.0);
+	glPointSize(3.0);
 	glBegin(GL_POINTS);
-	for(i = 0; i< 1000; i++)
+	for(i = 0; i < 1000; i++)
 	{
 		//x and y defines the radius
-		glVertex3f( (r * cos(2*3.14159 * i/1000.0)), -0.99, (r * sin(2*3.14159 * i/1000.0)));
+		glVertex3f( (r * cos(2*3.14159 * i/1000.0)), -0.9999, (r * sin(2*3.14159 * i/1000.0)));
 	}
 	glEnd();
 }
@@ -249,19 +299,19 @@ void Dcircle(float r)
 	int i;
 	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_POINTS);
-	for(i = 0; i< 1000; i++)
-	{
+	for(i = 0; i < 1000; i++)
+	{ 
 		//x and y defines the radius
-		glVertex3f( (r * cos(1*3.14159 * i/1000.0)), -0.99, 2.8 - (r * sin(1*3.14159 * i/1000.0)));
-		glVertex3f( (r * cos(1*3.14159 * i/1000.0)), -0.99, -2.8 + (r * sin(1*3.14159 * i/1000.0)));
+		glVertex3f( (r * cos(1*3.14159 * i/1000.0)), -0.9999, 2.8 - (r * sin(1*3.14159 * i/1000.0)));
+		glVertex3f( (r * cos(1*3.14159 * i/1000.0)), -0.9999, -2.8 + (r * sin(1*3.14159 * i/1000.0)));
 
 	}
 
 	for(i = 0; i < 20; i++)
 	{
 		//x and y defines the radius
-		glVertex3f( (r * cos(1*3.14159 * i/20.0)), -0.99, 2.8 + (r * sin(1*3.14159 * i/20.0)));
-		glVertex3f( (r * cos(1*3.14159 * i/20.0)), -0.99, -2.8 - (r * sin(1*3.14159 * i/20.0)));
+		glVertex3f( (r * cos(1*3.14159 * i/20.0)), -0.9999, 2.8 + (r * sin(1*3.14159 * i/20.0)));
+		glVertex3f( (r * cos(1*3.14159 * i/20.0)), -0.9999, -2.8 - (r * sin(1*3.14159 * i/20.0)));
 	}
 	glEnd();
 }
@@ -276,7 +326,6 @@ void ring(float r)
 		//x and y defines the radius
 		glVertex3f((r * cos(2*3.14159 * i/1000.0)), 1.2, 4.3 - 0.19 + (r * sin(2*3.14159 * i/1000.0)));
 		glVertex3f((r * cos(2*3.14159 * i/1000.0)), 1.2, -4.3 + 0.19 + (r * sin(2*3.14159 * i/1000.0)));
-
 	}
 	glEnd();
 }
@@ -286,12 +335,12 @@ void semicircle(float r)
 {
 	int i;
 	glColor3f(1.0, 1.0, 1.0);
+	glPointSize(3.0);
 	glBegin(GL_POINTS);
 	for(i = 0; i < 1000; i++)
 	{
-		glVertex3f((r * cos(1*3.14159 * i/1000.0)), -0.99, 4.05 - (r * sin(1*3.14159 * i/1000.0)));
-		glVertex3f((r * cos(1*3.14159 * i/1000.0)), -0.99, -4.05 + (r * sin(1*3.14159 * i/1000.0)));
-
+		glVertex3f((r * cos(1*3.14159 * i/1000.0)), -0.9999, 4.05 - (r * sin(1*3.14159 * i/1000.0)));
+		glVertex3f((r * cos(1*3.14159 * i/1000.0)), -0.9999, -4.05 + (r * sin(1*3.14159 * i/1000.0)));
 	}
 	glEnd();
 }
@@ -308,14 +357,6 @@ void ball()
 	}
 	glColor3f(0.81176, 0.3254, 0.0);
 	glutSolidSphere(0.15, 1000, 20);
-}
-void headfunction()
-{
-	glPushMatrix();
-	glColor3f(202.0 / 255.0, 160.0/255.0, 100.0/225.0);
-	glTranslatef(0.0, 0.8, +0.05);
-	glutSolidSphere(0.30, 1000, 20);
-	glPopMatrix();
 }
 
 void net(int poleChooser)
@@ -450,11 +491,11 @@ void parabola()
 
 //shoes
 float rightLeg[][3] = {
-	{0.03, -0.99, -0.1}, {0.03, -0.99, 0.1}, {0.2, -0.99, 0.1}, {0.2, -0.99, -0.1},
+	{0.03, -0.9999, -0.1}, {0.03, -0.9999, 0.1}, {0.2, -0.9999, 0.1}, {0.2, -0.9999, -0.1},
 	{0.03, -0.6, -0.1}, {0.03, -0.6, 0.1}, {0.2, -0.6, 0.1}, {0.2, -0.6, -0.1}
 };
 float leftLeg[][3] = {
-	{-0.2, -0.99, -0.1}, {-0.2, -0.99, 0.1}, {-0.03, -0.99, 0.1}, {-0.03, -0.99, -0.1},
+	{-0.2, -0.9999, -0.1}, {-0.2, -0.9999, 0.1}, {-0.03, -0.9999, 0.1}, {-0.03, -0.9999, -0.1},
 	{-0.2, -0.6, -0.1}, {-0.2, -0.6, 0.1}, {-0.03, -0.6, 0.1}, {-0.03, -0.6, -0.1}
 };
 
@@ -484,7 +525,6 @@ float rightHand[][3] = {
 void characterDesign(int a, int b, int c, int d)
 {
 	float R = 143.0/255.0, G = 125.0 / 255.0, B = 100.0 / 225.0;
-	//float R = 0.0, G = 0.0, B = 0.0;
 	
 	glColor3f(202.0 / 255.0, 160.0/255.0, 100.0/225.0);
 	glBegin(GL_POLYGON);
@@ -503,6 +543,7 @@ void characterDesign(int a, int b, int c, int d)
 	glVertex3fv(body[d]);    
 	glEnd();
 	//head. rotated by 3
+
 	glPushMatrix();
 	glRotatef(3.0, 1.0, 0.0, 0.0);
 	glColor3f(202.0 / 255.0, 160.0/255.0, 100.0/225.0);
@@ -520,11 +561,12 @@ void characterDesign(int a, int b, int c, int d)
 	glVertex3fv(head[c]);
 	glVertex3fv(head[d]);    
 	glEnd();
-	//headfunction();
+	
 	//eyes
 	int i;
 	float r = 0.05;
 	glColor3f(0.0, 0.0, 0.0);
+	glPointSize(2.0);
 	glBegin(GL_POINTS);
 	for(i = 0; i< 1000; i++)
 	{
@@ -533,12 +575,12 @@ void characterDesign(int a, int b, int c, int d)
 		glVertex3f( -0.15 - (r * cos(2*3.14159 * i/1000.0)), 0.8 + (r * sin(2*3.14159 * i/1000.0)), -0.2);
 	}
 	//another ring to make the eyes look darker
-	for(i = 0; i< 1000; i++)
-	{
-		//x and y defines the radius
-		glVertex3f( 0.15 - ((r - 0.005) * cos(2*3.14159 * i/1000.0)), 0.8 + ((r - 0.005) * sin(2*3.14159 * i/1000.0)), -0.2);
-		glVertex3f( -0.15 - ((r - 0.005) * cos(2*3.14159 * i/1000.0)), 0.8 + ((r - 0.005) * sin(2*3.14159 * i/1000.0)), -0.2);
-	}
+	//for(i = 0; i< 1000; i++)
+	//{
+	//	//x and y defines the radius
+	//	glVertex3f( 0.15 - ((r - 0.005) * cos(2*3.14159 * i/1000.0)), 0.8 + ((r - 0.005) * sin(2*3.14159 * i/1000.0)), -0.2);
+	//	glVertex3f( -0.15 - ((r - 0.005) * cos(2*3.14159 * i/1000.0)), 0.8 + ((r - 0.005) * sin(2*3.14159 * i/1000.0)), -0.2);
+	//}
 	glEnd();	
 
 	//mouth
@@ -549,7 +591,8 @@ void characterDesign(int a, int b, int c, int d)
 	glVertex3f(-0.05 , 0.6 , -0.21);
 	glEnd();
 	glPopMatrix();
-
+	
+	//legs
 	glColor3f(202.0 / 255.0, 160.0/255.0, 100.0/225.0);
 	glBegin(GL_POLYGON);
 	glVertex3fv(rightLeg[a]);
@@ -666,31 +709,18 @@ void draw(void)
 	polygon(0, 1, 2, 3);
 	//center circle
 	circle(0.60);
-	circle(0.61);
-	circle(0.62);
-	circle(0.63);
-	circle(0.64);
-	circle(0.65);
 
 	//parabola();
-
 	Dcircle(0.6);
 
 	net(1);
 	net(2);
 
-	ring(0.15);
-	ring(0.16);
 	ring(0.17);
-	ring(0.18);
+	
 	////three pointer semi cirlce
 	semicircle(2.22);
-	semicircle(2.23);
-	semicircle(2.24);
-	semicircle(2.25);
-	semicircle(2.26);
-	semicircle(2.27);
-
+	
 	//character
 	character();
 }
@@ -765,18 +795,19 @@ void keys(unsigned char key, int x, int y)
 	//test conditions to ensure that the camera always capture the obejct and does move too far from the object
 	if(key == 'x' && viewer[0] != -6) viewer[0] -= 1.0;
 	if(key == 'X' && viewer[0] != 6) viewer[0] += 1.0;
-	if(key == 'y' && viewer[1] != 0) viewer[1] -= 1.0;
-	if(key == 'Y' && viewer[1] != 9) viewer[1] += 1.0;
+	if(key == 'y' ) viewer[1] -= 1.0;
+	if(key == 'Y' ) viewer[1] += 1.0;
 	if(key == 'z'  && viewer[2] != 4) viewer[2] -= 1.0;
 	if(key == 'Z'  && viewer[2] != 10) viewer[2] += 1.0;
 	if(key == 's' || key == 'S')
 	{
 		triggered = 1;
 		firsttime = 1;
-		printf("triggered\n");
 	}
-	printf("%f\n",viewer[0] );
 	display();
+	/*
+	&& viewer[1] != 0
+&& viewer[1] != 9*/
 }
 
 void main(int argc, char **argv)
