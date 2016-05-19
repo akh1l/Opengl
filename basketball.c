@@ -789,8 +789,8 @@ void keys(unsigned char key, int x, int y)
 	//test conditions to ensure that the camera always capture the obejct and does move too far from the object
 	if(key == 'x' && viewer[0] != -6) viewer[0] -= 1.0;
 	if(key == 'X' && viewer[0] != 6) viewer[0] += 1.0;
-	if(key == 'y' ) viewer[1] -= 1.0;
-	if(key == 'Y' ) viewer[1] += 1.0;
+	if(key == 'y' && viewer[1] != 0) viewer[1] -= 1.0;
+	if(key == 'Y' && viewer[1] != 9) viewer[1] += 1.0;
 	if(key == 'z'  && viewer[2] != 4) viewer[2] -= 1.0;
 	if(key == 'Z'  && viewer[2] != 10) viewer[2] += 1.0;
 	if(key == 's' || key == 'S')
