@@ -471,24 +471,6 @@ void net(int poleChooser)
 	}
 }
 
-void parabola()
-{ 
-	float z, tempz, y ,a = 1 , b = 1 , dy = 0, dz = 0;
-	glBegin(GL_POINTS);
-	glColor3f(0.0, 0.0, 0.0);
-	for(z = -1.0; z < 1.0; z+=0.01)
-	{
-		y = - (2 * z * z) + 3.2; // c is height
-		tempz = z - 3.1;
-		glVertex3f(0, y, tempz);
-		dy = y - oldy;
-		dz = z - oldz;
-		oldy = y;
-		oldz = z;
-	}
-	glEnd();
-}
-
 //shoes
 float rightLeg[][3] = {
 	{0.03, -0.9999, -0.1}, {0.03, -0.9999, 0.1}, {0.2, -0.9999, 0.1}, {0.2, -0.9999, -0.1},
@@ -704,7 +686,6 @@ void draw(void)
 	//center circle
 	circle(0.60);
 
-	//parabola();
 	Dcircle(0.6);
 
 	net(1);
@@ -813,6 +794,6 @@ void main(int argc, char **argv)
 	glutKeyboardFunc(keys);
 	glEnable(GL_DEPTH_TEST);
 	glutTimerFunc(1, update, 0);
-	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glClearColor(1.0, 1.0, 1.0, 0.0);
 	glutMainLoop();
 }
